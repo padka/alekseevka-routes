@@ -317,6 +317,7 @@
   }
 
   function itinerary(route) {
+    const approach = route.stops.find(stop => stop.approachNote);
     const walking = maps.walkingUrl(route);
     const directions = walking
       ? `<a class="stop-map-link" href="${walking}" target="_blank" rel="noopener">Пеший путь по улицам в Яндекс Картах ↗</a>`
@@ -326,9 +327,9 @@
     return `<section class="route-map-panel" id="anchor-route-map" data-spy-anchor="route-map" tabindex="-1" aria-label="План прогулки и схема остановок">
       <div class="route-itinerary"><div class="route-itinerary-head"><strong>План прогулки</strong><span>${stopCount(route.stops.length)}</span></div>
         <div class="route-itinerary-list"><div class="itinerary-step is-start"><span class="itinerary-info"><strong>Старт · ${escapeText(route.startPoint.name)}</strong><span>${escapeText(route.startPoint.address)}</span></span></div>${items}</div></div>
-      <div class="route-map-body"><iframe class="route-constructor-map" title="Яндекс Карты · ${escapeText(route.title)}" loading="lazy"
-        src="https://yandex.ru/map-widget/v1/?um=constructor%3A${route.constructorMapId}&amp;source=constructor"></iframe>
+      <div class="route-map-body">${maps.mapPreview(route.constructorMapId, `Карта маршрута ${number(route)}`)}
         <details><summary>Схема остановок без интернета</summary><div id="routeMiniMap" class="route-mini-map" role="region" aria-label="Схема остановок маршрута ${number(route)}"></div></details>
+        ${approach ? `<p class="route-map-note">${escapeText(approach.approachNote)}</p>` : ''}
         <p class="route-map-note">Линия показывает пеший путь по улицам и дорожкам. Данные о пути: <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>. Входы и проходы по улицам ещё предстоит проверить на месте. ${directions}</p></div></section>`;
   }
 

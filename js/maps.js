@@ -3,7 +3,12 @@
   'use strict';
 
   const routes = window.EXCURSION_ROUTES;
-  const overviewMapId = 'c35f059ae87fab7d63cd31432c9af6c31540f76ebe1c5319ef30325ffa55d068';
+  const overviewMapId = '433ab3df5c36c6ff5f6fca1c71d02aa2d4fbd6de7d3872c7e3eccd15fde0a953';
+  // The standard image omits some long polylines. Use the Constructor web exports for these maps.
+  const mapExports = {
+    [overviewMapId]: 'assets/maps/cemetery-overview.png',
+    [routes.find(route => route.id === 5).constructorMapId]: 'assets/maps/route-5.png'
+  };
   let home, detail, selectedRoute = 'all';
 
   function html(value) {
@@ -14,9 +19,20 @@
     return `https://yandex.ru/maps/?pt=${lon},${lat}&z=17&l=map`;
   }
 
+  function mapPreview(id, title) {
+    const map = 'constructor%3A' + encodeURIComponent(id);
+    const exportedImage = mapExports[id];
+    const src = exportedImage || `https://api-maps.yandex.ru/services/constructor/1.0/static/?um=${map}&width=650&height=450&lang=ru_RU`;
+    const [width, height] = exportedImage ? [1200, 850] : [650, 450];
+    return `<a class="yandex-map-preview" href="https://yandex.ru/maps/?um=${map}&amp;source=constructorLink" target="_blank" rel="noopener">
+      <img src="${html(src)}" width="${width}" height="${height}" loading="lazy" alt="${html(title)}">
+      <span>Открыть в Яндекс Картах ↗</span>
+    </a>`;
+  }
+
   function walkingUrl(route) {
     if (route.mode.includes('автобус')) return null;
-    const points = [route.startPoint, ...route.stops].map(point => point.coords.join(','));
+    const points = [route.startPoint, ...route.stops].map(point => (point.approachCoords || point.coords).join(','));
     const waypoints = points.filter((point, i) => i === 0 || point !== points[i - 1]);
     return `https://yandex.ru/maps/?rtext=${encodeURIComponent(waypoints.join('~'))}&rtt=pd`;
   }
@@ -93,10 +109,11 @@
     footer.innerHTML = selectedRoute === 'all' ? '' : `${route.planningNote ? `<p class="map-planning-note">${html(route.planningNote)}</p>` : ''}
       <a class="btn btn-solid btn-sm" href="#route-${route.id}">Открыть маршрут ${html(route.number)}</a>
       ${walking ? `<a class="map-sidebar-ext" href="${walking}" target="_blank" rel="noopener">Пеший путь в Яндекс Картах</a>` : ''}`;
-    const id = selectedRoute === 'all' ? overviewMapId : route.constructorMapId;
-    home.title = selectedRoute === 'all' ? 'Яндекс Карты · Все маршруты Алексеевки' : 'Яндекс Карты · ' + route.title;
-    const url = 'https://yandex.ru/map-widget/v1/?um=constructor%3A' + id + '&source=constructor';
-    if (home.src !== url) home.src = url;
+    const all = selectedRoute === 'all';
+    home.innerHTML = all ? mapPreview(overviewMapId, 'Карта всех маршрутов Алексеевки') :
+      mapPreview(route.constructorMapId, 'Карта маршрута ' + route.number);
+    const approach = visibleRoutes.flatMap(item => item.stops).find(stop => stop.approachNote);
+    document.getElementById('mapApproachNote').textContent = approach?.approachNote || '';
   }
 
   function initHome() {
@@ -105,9 +122,7 @@
     const toolbar = document.getElementById('mapRouteFilters');
     toolbar.innerHTML = `<button type="button" class="map-filter-btn active" data-map-route="all" aria-pressed="true">Все маршруты</button>` +
       routes.map(r => `<button type="button" class="map-filter-btn" data-map-route="${r.id}" aria-pressed="false"><span class="route-dot" style="background:${html(r.color)}"></span>${html(r.number)} · ${html(r.shortTitle)}</button>`).join('');
-    home = document.createElement('iframe');
-    home.loading = 'lazy';
-    map.replaceChildren(home);
+    home = map;
     renderHome();
     toolbar.addEventListener('click', e => {
       const btn = e.target.closest('[data-map-route]');
@@ -141,5 +156,5 @@
     window.scrollTo({top:saved.y, behavior:'instant'});
   }
 
-  window.GuideMaps = {initHome, mountRoute, leaveRoute, pointUrl, walkingUrl, restoreDetailOrigin};
+  window.GuideMaps = {initHome, mountRoute, leaveRoute, pointUrl, mapPreview, walkingUrl, restoreDetailOrigin};
 })();
