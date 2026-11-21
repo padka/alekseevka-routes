@@ -19,6 +19,18 @@ window.GuideImageSizes = {
     694,
     521
   ],
+  "assets/images/route2/passport-image4.jpeg": [
+    826,
+    594
+  ],
+  "assets/images/route2/passport-image5.jpeg": [
+    1186,
+    594
+  ],
+  "assets/images/route2/passport-image6.jpeg": [
+    955,
+    555
+  ],
   "assets/images/route3/passport-image1.jpeg": [
     1429,
     950
