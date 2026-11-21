@@ -2153,6 +2153,7 @@ main:focus,
   grid-template-columns: minmax(254px, 0.62fr) minmax(0, 1.38fr);
 }
 
+.route-constructor-map { display: block; width: 100%; height: clamp(320px, 52vh, 500px); border: 0; }
 .route-mini-map {
   height: 360px;
   background: #e9e8e3;

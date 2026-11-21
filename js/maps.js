@@ -108,7 +108,7 @@
       }
     }
     const status = view.failed || 'Схема остановок';
-    const manual = !('IntersectionObserver' in window) && location.protocol !== 'file:';
+    const manual = view !== detail && !('IntersectionObserver' in window) && location.protocol !== 'file:';
     const retry = view.failed || manual ? `<button type="button" class="map-retry text-btn" data-map-retry>${view.failed ? 'Загрузить карту ещё раз' : 'Показать карту улиц'}</button>` : '';
     view.element.innerHTML = `<div class="offline-map-wrap"><div class="offline-map-banner"><span role="status">${status}</span>${retry}</div>
       <svg class="offline-map-svg" viewBox="0 0 600 300" role="group" aria-label="Схема с переходами к остановкам">${lines.join('')}${pins.join('')}</svg></div>`;
@@ -224,6 +224,7 @@
       view.element.replaceChildren(canvas);
       const L = window.L;
       const map = view.map = L.map(canvas, {scrollWheelZoom:false, zoomControl:false});
+      map.attributionControl.setPrefix('<a href="https://leafletjs.com/">Leaflet</a>');
       canvas.addEventListener('keydown', event => closePopupFromControl(view, event), true);
       canvas.addEventListener('click', event => closePopupFromControl(view, event), true);
       L.control.zoom({zoomInTitle:'Приблизить', zoomOutTitle:'Отдалить'}).addTo(map);
@@ -345,7 +346,10 @@
   function mountRoute(route) {
     leaveRoute();
     const element = document.getElementById('routeMiniMap');
-    if (element) detail = makeView(element, [route]);
+    if (element) {
+      detail = {element, routes:[route], markers:new Map()};
+      diagram(detail);
+    }
   }
 
   function showHome() {

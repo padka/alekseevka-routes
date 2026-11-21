@@ -7,6 +7,7 @@ window.EXCURSION_ROUTES = [
   {
     "id": 1,
     "number": "№1",
+    "constructorMapId": "3e935392820c87d3b194082860f0ecd9a80a18c92e547ea79f47498118185833",
     "title": "Первооткрыватель подсолнечного масла",
     "shortTitle": "Первооткрыватель масла",
     "categories": [
@@ -212,6 +213,7 @@ window.EXCURSION_ROUTES = [
   {
     "id": 2,
     "number": "№2",
+    "constructorMapId": "aaa1a84c1dfa4d1098c4827abae9ff6ee77670f68bab419e8f5b4d9953dfa821",
     "title": "По улицам города",
     "shortTitle": "По улицам города",
     "categories": [
@@ -445,6 +447,7 @@ window.EXCURSION_ROUTES = [
   {
     "id": 3,
     "number": "№3",
+    "constructorMapId": "31cdf66b2e10f1cc9b781f6bd9af3d61943a9ab85e3521dc19aa1332c643092e",
     "title": "Знаменитые купцы и торговцы",
     "shortTitle": "Купцы и торговцы",
     "categories": [
@@ -720,6 +723,7 @@ window.EXCURSION_ROUTES = [
   {
     "id": 4,
     "number": "№4",
+    "constructorMapId": "f073b262bb0a9777e3a4b764240c355e2afdffb50d332cf5caa19aac6e15b5d2",
     "title": "Исторические памятники и мемориалы г. Алексеевка",
     "shortTitle": "Памятники и мемориалы",
     "categories": [
@@ -970,6 +974,7 @@ window.EXCURSION_ROUTES = [
   {
     "id": 5,
     "number": "№5",
+    "constructorMapId": "af59905373392714796283e239559a8a7bcb38e2fb7038d5c7f011daeaaa3806",
     "title": "То, чем славится город",
     "shortTitle": "То, чем славится город",
     "categories": [
@@ -1156,6 +1161,7 @@ window.EXCURSION_ROUTES = [
   {
     "id": 6,
     "number": "№6",
+    "constructorMapId": "86c14093d6e47993381165db4d9967640b34f59d62293255e1a7abc269e52b83",
     "title": "Отзвуки Великой Отечественной войны",
     "shortTitle": "Отзвуки ВОВ",
     "categories": [
@@ -1316,6 +1322,7 @@ window.EXCURSION_ROUTES = [
   {
     "id": 7,
     "number": "№7",
+    "constructorMapId": "fddc41cfbacdecb425872d327153d8c96902b963398971b48453dcdd7f20f0f8",
     "title": "Путь памяти",
     "shortTitle": "Путь памяти",
     "categories": [
@@ -1494,6 +1501,7 @@ window.EXCURSION_ROUTES = [
   {
     "id": 8,
     "number": "№8",
+    "constructorMapId": "a3fb3b28611a3ca67717f5a70e4c82903e9d131feea4a12018cbd950d0090146",
     "title": "Памятники советским воинам, погибшим в боях с фашистскими захватчиками",
     "shortTitle": "Памятники советским воинам",
     "categories": [

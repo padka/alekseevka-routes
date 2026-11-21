@@ -326,8 +326,10 @@
     return `<section class="route-map-panel" id="anchor-route-map" data-spy-anchor="route-map" tabindex="-1" aria-label="План прогулки и схема остановок">
       <div class="route-itinerary"><div class="route-itinerary-head"><strong>План прогулки</strong><span>${stopCount(route.stops.length)}</span></div>
         <div class="route-itinerary-list"><div class="itinerary-step is-start"><span class="itinerary-info"><strong>Старт · ${escapeText(route.startPoint.name)}</strong><span>${escapeText(route.startPoint.address)}</span></span></div>${items}</div></div>
-      <div class="route-map-body"><div id="routeMiniMap" class="route-mini-map" role="region" aria-label="Схема остановок маршрута ${number(route)}"></div>
-        <p class="route-map-note">Метки поставлены по адресам, пунктир показывает порядок остановок. Входы и проходы по улицам ещё предстоит проверить на месте. ${directions}</p></div></section>`;
+      <div class="route-map-body"><iframe class="route-constructor-map" title="Яндекс Карты · ${escapeText(route.title)}" loading="lazy"
+        src="https://yandex.ru/map-widget/v1/?um=constructor%3A${route.constructorMapId}&amp;source=constructor"></iframe>
+        <details><summary>Схема остановок без интернета</summary><div id="routeMiniMap" class="route-mini-map" role="region" aria-label="Схема остановок маршрута ${number(route)}"></div></details>
+        <p class="route-map-note">Метки поставлены по адресам, линия показывает порядок остановок. Входы и проходы по улицам ещё предстоит проверить на месте. ${directions}</p></div></section>`;
   }
 
   function renderRoute(route) {
