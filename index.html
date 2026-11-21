@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Алексеевка — Пеший путеводитель по городу</title>
+  <meta name="description" content="Пешие маршруты по исторической Алексеевке Белгородской области. Места старта, карты прогулок, истории города и краеведческие викторины." />
+
+  <link rel="stylesheet" href="css/styles.css" />
+  <meta name="guide-route-pages" content="routes/">
+  <meta property="og:site_name" content="Пешком по Алексеевке">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Пешком по Алексеевке">
+  <meta property="og:description" content="Пешие прогулки по городу, места старта, остановки и краеведческие викторины.">
+  <meta property="og:url" content="https://padka.github.io/alekseevka-routes/">
+  <meta property="og:image" content="https://padka.github.io/alekseevka-routes/assets/images/route1/passport-image1.jpeg">
+  <meta property="og:image:alt" content="Первооткрыватель масла">
+</head>
+<body>
+  <a class="skip-link" href="#guide-content">Перейти к содержанию</a>
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <a href="#home" class="brand" data-nav="home">
+        <span class="brand-title">Алексеевка</span>
+        <span class="brand-sep">/</span>
+        <span class="brand-sub">Городской путеводитель</span>
+      </a>
+
+      <nav class="main-nav" id="mainNav" aria-label="Навигация">
+        <a href="#routes" class="nav-link" data-nav="routes">Маршруты</a>
+        <a href="#map" class="nav-link" data-nav="map">Карта</a>
+        <a href="#intro" class="nav-link" data-nav="intro">О городе</a>
+        <a href="#quizzes" class="nav-link" data-nav="quizzes">Викторины</a>
+        <a href="#about" class="nav-link" data-nav="about">О проекте</a>
+      </nav>
+
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Меню" aria-controls="mainNav" aria-expanded="false">
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
+  </header>
+
+  <div id="guide-content" tabindex="-1">
+    <main id="homeView" tabindex="-1">
+      <section class="hero" id="home" aria-labelledby="home-title">
+        <div class="container hero-layout">
+          <div class="hero-copy">
+            <h1 class="hero-title" id="home-title" tabindex="-1">Пешком по Алексеевке</h1>
+            <p class="hero-stats" id="heroRouteStats">7 маршрутов · 4 до 45 минут</p>
+            <div class="hero-recommendation">
+              <p class="hero-walk-name">Первооткрыватель подсолнечного масла</p>
+              <p class="hero-walk-facts">Первая прогулка по центру · 45 минут · 1,5 км</p>
+              <div class="hero-actions">
+                <a href="#route-1" class="btn btn-solid" data-open-route="1">Открыть маршрут № 1 <span class="arrow" aria-hidden="true">→</span></a>
+                <a href="#routes" class="hero-all" data-nav="routes">Все маршруты</a>
+              </div>
+            </div>
+          </div>
+          <figure class="hero-plate" id="heroPlate">
+            <img src="assets/images/route1/passport-image1.jpeg" srcset="assets/webp/route1/passport-image1-384.webp 384w, assets/webp/route1/passport-image1-768.webp 768w, assets/webp/route1/passport-image1-875.webp 875w" sizes="(max-width: 760px) calc(100vw - 36px), (max-width: 1279px) 50vw, 680px" width="875" height="583" fetchpriority="high" alt="Бронзовый памятник Даниилу Бокареву в городском сквере" />
+            <figcaption><span>Памятник Д. С. Бокареву</span><span>Фото из паспорта № 1</span></figcaption>
+          </figure>
+        </div>
+      </section>
+      <noscript><p class="container">Чтобы открыть прогулки, карту и викторины, включите JavaScript в браузере.</p></noscript>
+      <section class="section" id="routes">
+        <div class="container">
+          <div class="section-head">
+            <div class="section-head-left">
+              <h2 class="section-title">Маршруты</h2>
+            </div>
+            <p class="catalog-count" id="resultCount" role="status" aria-live="polite"></p>
+          </div>
+          <div class="catalog-bar">
+            <label class="search-field">
+              <span class="sr-only">Поиск по названию, номеру или остановке</span>
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
+              <input type="search" id="routeSearchInput" placeholder="Название, номер или остановка" autocomplete="off" />
+            </label>
+            <details class="catalog-filters" id="catalogFilters">
+              <summary><span id="filterSummary">Фильтры</span></summary>
+              <div class="filter-tabs" role="group" aria-label="Фильтр маршрутов">
+                <button class="filter-tab active" type="button" data-filter="all" aria-pressed="true">Все маршруты <span id="filterCountAll"></span></button>
+                <button class="filter-tab" type="button" data-filter="short" aria-pressed="false">До 45 минут <span id="filterCountShort"></span></button>
+                <button class="filter-tab" type="button" data-filter="merchant" aria-pressed="false">Купечество и маслоделие</button>
+                <button class="filter-tab" type="button" data-filter="churches" aria-pressed="false">Храмы и архитектура</button>
+                <button class="filter-tab" type="button" data-filter="memory" aria-pressed="false">Воинская память</button>
+              </div>
+            </details>
+            <div class="view-switch" role="group" aria-label="Вид каталога">
+              <button type="button" class="view-btn active" data-view="grid" aria-pressed="true">Карточки</button>
+              <button type="button" class="view-btn" data-view="list" aria-pressed="false">Список</button>
+            </div>
+          </div>
+          <div class="catalog-stage" id="catalogStage">
+            <div class="routes-grid" id="routesGrid"></div>
+          </div>
+          <div class="empty-state hidden" id="routesEmptyState">
+            <p>По вашему запросу ничего не найдено.</p>
+            <button type="button" class="btn btn-line" id="resetFiltersBtn">Сбросить фильтры</button>
+          </div>
+
+          <p class="catalog-footnote mono">
+            Маршруты № 1 и № 3–8 сохраняют номера из реестра школы № 5.
+          </p>
+        </div>
+      </section>
+      <section class="section section-stone" id="map">
+        <div class="container">
+          <div class="section-head">
+            <div class="section-head-left">
+              <h2 class="section-title">Карта прогулок</h2>
+            </div>
+            <p class="section-note">
+              Метки показывают ориентиры по адресам, пунктир соединяет остановки по порядку. Путь по улицам можно открыть в Яндекс Картах.
+            </p>
+          </div>
+
+          <div class="map-filters" id="mapRouteFilters" aria-label="Фильтр маршрутов на карте"></div>
+
+          <div class="map-layout">
+            <div id="cityMap" class="city-map" role="region" aria-label="Карта маршрутов города Алексеевка"></div>
+            <aside class="map-sidebar" id="mapSidebar">
+              <div class="map-sidebar-head">
+                <h3 id="mapSidebarTitle">Все объекты</h3>
+                <span class="mono" id="mapSidebarCount"></span>
+              </div>
+              <div class="map-stops-list" id="mapStopsList"></div>
+              <div class="map-sidebar-footer hidden" id="mapSidebarFooter"></div>
+            </aside>
+          </div>
+        </div>
+      </section>
+      <section class="section section-compact" id="intro">
+        <div class="container">
+          <div class="section-head">
+            <div class="section-head-left">
+              <h2 class="section-title">Алексеевка за 30 секунд</h2>
+            </div>
+            <p class="section-note">
+              Четыре даты из истории Алексеевки на реке Тихая Сосна.
+            </p>
+          </div>
+          <ol class="timeline-grid" aria-label="Ключевые даты истории Алексеевки">
+            <li class="timeline-item">
+              <span class="timeline-year mono">1685</span>
+              <h3>Слобода на Тихой Сосне</h3>
+              <p>Основана слобода Алексеевка — будущая богатая вотчина графов Шереметевых на южной границе государства.</p>
+            </li>
+            <li class="timeline-item">
+              <span class="timeline-year mono">1829</span>
+              <h3>Родина подсолнечного масла</h3>
+              <p>Крепостной крестьянин Даниил Бокарев впервые в России получил масло из семян подсолнечника, открыв новую отрасль.</p>
+            </li>
+            <li class="timeline-item">
+              <span class="timeline-year mono">1880–1913</span>
+              <h3>Купеческий расцвет</h3>
+              <p>В слободе выросли каменные особняки, купеческий клуб, ремесленное училище и храм Александра Невского.</p>
+            </li>
+            <li class="timeline-item">
+              <span class="timeline-year mono">1943</span>
+              <h3>Освобождение города</h3>
+              <p>19 января 1943 года Алексеевка была освобождена после полугодовой оккупации. Память героев хранят городские мемориалы.</p>
+            </li>
+          </ol>
+
+        </div>
+      </section>
+      <section class="section section-stone" id="quizzes">
+        <div class="container">
+          <div class="section-head">
+            <div class="section-head-left">
+              <h2 class="section-title">Краеведческие викторины</h2>
+            </div>
+            <p class="section-note">
+              Пройдите короткий тест после прогулки или испытайте себя в общей викторине из 10 случайных вопросов о городе.
+            </p>
+          </div>
+
+          <div class="mega-quiz-row">
+            <div>
+              
+              <h3>Большая викторина по истории Алексеевки</h3>
+              <p>Десять случайных вопросов из маршрутов. После каждого ответа вы увидите пояснение.</p>
+            </div>
+            <button type="button" class="btn btn-solid" id="startMegaQuizBtn">Начать тест <span class="arrow">→</span></button>
+          </div>
+
+          <div class="mega-quiz-panel hidden" id="megaQuizPanel"></div>
+
+          <p class="quiz-hub-progress" id="headerQuizScore"></p>
+          <div class="quiz-index-list" id="quizHubGrid"></div>
+        </div>
+      </section>
+      <section class="section" id="about">
+        <div class="container">
+          <div class="section-head">
+            <div class="section-head-left">
+              <h2 class="section-title">Кто подготовил маршруты</h2>
+            </div>
+          </div>
+
+          <div class="about-grid">
+            <div class="about-prose">
+              <p>
+                Семь паспортов прогулок подготовили педагоги <strong>школы № 5 города Алексеевки</strong>. На каждом указан приказ от 15 октября 2024 года № 244-орг. Для сайта редакция адаптировала вопросы школьных викторин, составила варианты ответов и пояснения.
+              </p>
+              <p>
+                В школьных паспортах указаны от двух до пяти сопровождающих. На странице каждой прогулки можно распечатать краткий план со стартом и адресами остановок. Условия входа во дворы школ № 3 и № 4 для самостоятельных посетителей предстоит уточнить.
+              </p>
+              <p>Длина и время приведены по паспортам. У № 5 не указан автобусный участок, у № 8 уточняются время и границы расстояния. Метки на карте помогают найти ориентиры. Входы, переходы и проезд с коляской ещё предстоит проверить на месте.</p>
+              <p>Все 27 фотографий взяты из паспортов. При увеличении открывается исходный кадр. Подписи к архивным снимкам сохраняют известные отметки коллекций. Более поздние фотографии показывают вид здания на момент съёмки.</p>
+              <p>Даты оккупации и освобождения Алексеевки сверены по <a href="https://opacm.bgunb.ru/opacg/letopis/history/texts/alekseevsky/alekseevka.pdf">справке областной библиотеки (PDF, с. 3)</a>. Адрес и метка бюста Рубана взяты из <a href="https://ru-monuments.toolforge.org/get_info.php?id=311510314590005">карточки памятника в копии государственного реестра</a>.</p>
+              <dl class="about-specs">
+                <div>
+                  <dt class="mono">СОСТАВИТЕЛЬ ПАСПОРТОВ</dt>
+                  <dd>МБОУ «ООШ №5», г. Алексеевка, Белгородская область</dd>
+                </div>
+                <div>
+                  <dt class="mono">ОСНОВНОЙ СТАРТ</dt>
+                  <dd>ул. Гагарина, 14 (кроме Маршрута №7 — ул. В. Собины, 10)</dd>
+                </div>
+                <div>
+                  <dt class="mono">ДОКУМЕНТ</dt>
+                  <dd>Приказ от 15.10.2024 г. № 244-орг</dd>
+                </div>
+              </dl>
+            </div>
+
+            <div class="about-authors">
+              <div class="mono authors-heading">Авторы маршрутов</div>
+              <ul class="authors-list" id="authorsList"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <main id="routeDetailView" class="route-detail-view hidden" tabindex="-1"></main>
+  </div>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <span class="footer-brand">Алексеевка / Путеводитель по городу</span>
+        <span class="footer-meta mono">Школа № 5 · Алексеевка · 2024</span>
+      </div>
+      <div class="footer-links">
+        <a href="#intro" data-nav="intro">О городе</a>
+        <a href="#routes" data-nav="routes">Маршруты</a>
+        <a href="#map" data-nav="map">Карта</a>
+        <a href="#quizzes" data-nav="quizzes">Викторины</a>
+        <a href="#about" data-nav="about">О проекте</a>
+      </div>
+    </div>
+  </footer>
+  <div class="lightbox hidden" id="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр фотографии">
+    <button class="lightbox-close mono" id="lightboxClose" type="button" aria-label="Закрыть">Закрыть ×</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" type="button" aria-label="Предыдущее">←</button>
+    <figure class="lightbox-figure">
+      <img id="lightboxImg" alt="" />
+      <figcaption id="lightboxCaption"></figcaption>
+    </figure>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" type="button" aria-label="Следующее">→</button>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/image-sizes.js"></script>
+  <script src="js/images.js"></script>
+  <script src="js/maps.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
