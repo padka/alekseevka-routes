@@ -889,11 +889,35 @@ main:focus,
   z-index: 1;
 }
 
-.city-map > iframe {
+.yandex-map-preview {
+  display: flex;
+  flex-direction: column;
+  color: var(--ink);
+}
+
+.yandex-map-preview img {
   display: block;
   width: 100%;
+  height: auto;
+}
+
+.yandex-map-preview span {
+  display: block;
+  padding: 12px 16px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  background: var(--bg-paper);
+  border-top: 1px solid var(--line);
+}
+
+.city-map .yandex-map-preview {
   height: 100%;
-  border: 0;
+}
+
+.city-map .yandex-map-preview img {
+  flex: 1;
+  min-height: 0;
+  object-fit: contain;
 }
 
 .custom-route-pin > div {
@@ -2156,7 +2180,6 @@ main:focus,
   grid-template-columns: minmax(254px, 0.62fr) minmax(0, 1.38fr);
 }
 
-.route-constructor-map { display: block; width: 100%; height: clamp(320px, 52vh, 500px); border: 0; }
 .route-mini-map {
   height: 360px;
   background: #e9e8e3;
