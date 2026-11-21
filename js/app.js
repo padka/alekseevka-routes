@@ -12,7 +12,7 @@
   const plural = new Intl.PluralRules('ru');
   const progress = quiz.loadProgress();
   const catalog = { filter: 'all', search: '', view: 'grid' };
-  const cardSizes = 'auto, (max-width: 760px) calc(100vw - 36px), (max-width: 1248px) calc((100vw - 96px) / 2), 576px';
+  const cardSizes = 'auto, (max-width: 600px) 112px, (max-width: 760px) calc(100vw - 32px), (max-width: 1248px) calc((100vw - 96px) / 2), 576px';
   const photoSizes = 'auto, (max-width: 760px) calc(100vw - 36px), (max-width: 1060px) calc(100vw - 64px), 760px';
   const previewSizes = 'auto, 340px';
   const homeSections = ['home', 'routes', 'intro', 'map', 'quizzes', 'about'];
@@ -106,7 +106,7 @@
         <p class="route-card-facts">${escapeText(facts(route))}</p>
         <p class="route-card-start">Старт · ${escapeText(route.startPoint.address)}</p>
         ${route.planningNote ? `<p class="route-card-start">${escapeText(route.planningNote)}</p>` : ''}
-        <p class="route-card-stops">${stops}</p>
+        <p class="route-card-stops${stop ? ' has-match' : ''}">${stops}</p>
       </div>
       <div class="route-card-media" data-cover-route="${route.id}" role="img" aria-label="${escapeText(coverCaption(route))}"></div>
     </article>`;
@@ -338,22 +338,28 @@
     gallery = [];
     const note = route.sourceNote || '';
     const stops = route.stops.map((stop, index) => renderStop(route, stop, index)).join('');
-    const navLink = (hash, key, label) => `<a class="route-anchor-btn" data-scroll-anchor="${key}" href="${hash}">${escapeText(label)}</a>`;
-    const jumpLinks = [navLink(`${routeHash(route)}/map`, 'route-map', 'План'), ...route.stops.map((stop, i) => navLink(stopHash(route, stop), `stop-${stop.id}`, `${i + 1}. ${stop.title}`)), navLink(`${routeHash(route)}/quiz`, 'route-quiz', 'Викторина')];
+    const navLink = (hash, key, label, shortLabel = label) =>
+      `<a class="route-anchor-btn" data-scroll-anchor="${key}" href="${hash}" aria-label="${escapeText(label)}"><span class="route-anchor-label">${escapeText(label)}</span><span class="route-anchor-short" aria-hidden="true">${escapeText(shortLabel)}</span></a>`;
+    const jumpLinks = [
+      navLink(`${routeHash(route)}/map`, 'route-map', 'План'),
+      ...route.stops.map((stop, i) => navLink(stopHash(route, stop), `stop-${stop.id}`, `${i + 1}. ${stop.title}`, String(i + 1))),
+      navLink(`${routeHash(route)}/quiz`, 'route-quiz', 'Викторина', 'Тест')
+    ];
     const detail = byId('routeDetailView');
     detail.innerHTML = `<div class="container">
       <nav class="detail-topbar breadcrumbs" aria-label="Навигационная цепочка"><a href="#routes" data-nav="routes">← Все маршруты</a><span aria-hidden="true">/</span><span class="crumb-current">Маршрут ${number(route)}</span></nav>
+      <nav class="route-sticky-nav" aria-label="Разделы прогулки">${jumpLinks.join('')}</nav>
       <header class="detail-header"><div><h1 class="detail-title" tabindex="-1">${escapeText(route.title)}</h1><p class="detail-facts">${escapeText(facts(route))}</p>
         </div><div class="detail-start-info"><h2>Место старта</h2><p><strong>${escapeText(route.startPoint.name)}</strong><br>${escapeText(route.startPoint.address)}</p>
         <div class="detail-actions"><a class="btn btn-solid" href="${maps.pointUrl(route.startPoint.coords)}" target="_blank" rel="noopener">К месту старта ↗</a>
         <a class="btn btn-line" data-scroll-stop="${route.stops[0].id}" href="${stopHash(route, route.stops[0])}">Читать первую остановку</a></div></div></header>
       <p class="detail-summary">${escapeText(route.summary)}</p>
       ${note ? `<p class="detail-visitor-note">${escapeText(note)}</p>` : ''}${itinerary(route)}
-      <nav class="route-sticky-nav" aria-label="Разделы прогулки">${jumpLinks.join('')}</nav><section aria-label="Остановки маршрута">${stops}</section>
+      <section aria-label="Остановки маршрута">${stops}</section>
       <section id="anchor-route-quiz" tabindex="-1" data-spy-anchor="route-quiz" aria-label="Викторина по маршруту"></section>
       <details class="route-sources"><summary>Паспорт маршрута и авторы</summary><dl class="passport-table">${[['Формат', route.mode], ['Сопровождение',route.guides], ['Авторы',route.authors], ['Утверждение',route.decree]].map(([label,value]) => `<div class="passport-row"><dt>${label}</dt><dd>${escapeText(value)}</dd></div>`).join('')}</dl></details>
       <nav class="route-nav-footer" aria-label="Действия с маршрутом"><button type="button" class="text-btn" id="printRouteBtn">Распечатать паспорт</button>
-      ${location.protocol === 'file:' ? '' : '<div><button type="button" class="text-btn" id="shareRouteBtn">Скопировать ссылку на маршрут</button><span id="shareRouteStatus" role="status"></span><input id="shareRouteManual" aria-label="Ссылка на маршрут для копирования" type="url" readonly hidden></div>'}
+      ${location.protocol === 'file:' ? '' : '<div><button type="button" class="text-btn" id="shareRouteBtn">Скопировать ссылку на маршрут</button><span id="shareRouteStatus" role="status"></span><input id="shareRouteManual" aria-label="Ссылка на маршрут для копирования" type="text" inputmode="url" readonly hidden></div>'}
       <div class="detail-route-switcher" aria-label="Другие маршруты">${routes.map(r => `<a href="${routeHash(r)}" data-open-route="${r.id}" class="switcher-num${r.id === route.id ? ' active' : ''}" ${r.id === route.id ? 'aria-current="page"' : ''} aria-label="Маршрут ${number(r)}. ${escapeText(r.title)}">${r.id}</a>`).join('')}</div><a class="text-btn" href="#routes" data-nav="routes">К каталогу</a></nav>
       </div>${printPassport(route, note)}`;
     detail.classList.remove('hidden');
@@ -577,7 +583,7 @@
         if (section.getBoundingClientRect().top <= window.innerHeight * 0.32) active = section.id;
       }
     }
-    for (const link of byId('mainNav').querySelectorAll('[data-nav]')) {
+    for (const link of byId('siteHeader').querySelectorAll('.nav-link[data-nav]')) {
       const current = link.dataset.nav === active;
       link.classList.toggle('active', current);
       if (current) link.setAttribute('aria-current', 'location');

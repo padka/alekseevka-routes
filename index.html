@@ -2,11 +2,11 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Алексеевка — Пеший путеводитель по городу</title>
   <meta name="description" content="Пешие маршруты по исторической Алексеевке Белгородской области. Места старта, карты прогулок, истории города и краеведческие викторины." />
 
-  <link rel="stylesheet" href="css/styles.css?v=2cfceb1e612e69c1" />
+  <link rel="stylesheet" href="css/styles.css?v=bbbede7a2f966f4a" />
   <meta name="guide-route-pages" content="routes/">
   <meta property="og:site_name" content="Пешком по Алексеевке">
   <meta property="og:locale" content="ru_RU">
@@ -33,6 +33,11 @@
         <a href="#intro" class="nav-link" data-nav="intro">О городе</a>
         <a href="#quizzes" class="nav-link" data-nav="quizzes">Викторины</a>
         <a href="#about" class="nav-link" data-nav="about">О проекте</a>
+      </nav>
+
+      <nav class="mobile-shortcuts" aria-label="Быстрые переходы">
+        <a href="#routes" class="nav-link" data-nav="routes">Маршруты</a>
+        <a href="#map" class="nav-link" data-nav="map">Карта</a>
       </nav>
 
       <button class="menu-toggle" id="menuToggle" type="button" aria-label="Меню" aria-controls="mainNav" aria-expanded="false">
@@ -111,10 +116,6 @@
             <div class="section-head-left">
               <h2 class="section-title">Карта прогулок</h2>
             </div>
-            <p class="section-note">
-              Цветные линии показывают пешие пути между остановками по улицам и дорожкам. Выберите маршрут, чтобы увидеть его отдельно.
-              <span id="mapApproachNote"></span> Данные о путях <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>.
-            </p>
           </div>
 
           <div class="map-filters" id="mapRouteFilters" aria-label="Фильтр маршрутов на карте"></div>
@@ -126,10 +127,14 @@
                 <h3 id="mapSidebarTitle">Все объекты</h3>
                 <span class="mono" id="mapSidebarCount"></span>
               </div>
+              <button type="button" class="map-stops-toggle" id="mapStopsToggle" aria-controls="mapStopsList" aria-expanded="false">Показать все остановки</button>
               <div class="map-stops-list" id="mapStopsList"></div>
               <div class="map-sidebar-footer hidden" id="mapSidebarFooter"></div>
             </aside>
           </div>
+          <p class="map-footnote">
+            <span id="mapApproachNote"></span> Данные о путях <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>.
+          </p>
         </div>
       </section>
       <section class="section section-compact" id="intro">
@@ -267,8 +272,8 @@
   <script src="js/data.js?v=2e9e8f566a358118"></script>
   <script src="js/image-sizes.js?v=943f71bfad1bbeac"></script>
   <script src="js/images.js"></script>
-  <script src="js/maps.js?v=f391ef044aa28a0c"></script>
-  <script src="js/quiz.js"></script>
-  <script src="js/app.js?v=205f99bda5de4f67"></script>
+  <script src="js/maps.js?v=777e830b069413ae"></script>
+  <script src="js/quiz.js?v=bce754520d2f902b"></script>
+  <script src="js/app.js?v=9e395dec898973e0"></script>
 </body>
 </html>
