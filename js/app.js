@@ -329,7 +329,7 @@
       <div class="route-map-body"><iframe class="route-constructor-map" title="Яндекс Карты · ${escapeText(route.title)}" loading="lazy"
         src="https://yandex.ru/map-widget/v1/?um=constructor%3A${route.constructorMapId}&amp;source=constructor"></iframe>
         <details><summary>Схема остановок без интернета</summary><div id="routeMiniMap" class="route-mini-map" role="region" aria-label="Схема остановок маршрута ${number(route)}"></div></details>
-        <p class="route-map-note">Метки поставлены по адресам, линия показывает порядок остановок. Входы и проходы по улицам ещё предстоит проверить на месте. ${directions}</p></div></section>`;
+        <p class="route-map-note">Линия показывает пеший путь по улицам и дорожкам. Данные о пути: <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>. Входы и проходы по улицам ещё предстоит проверить на месте. ${directions}</p></div></section>`;
   }
 
   function renderRoute(route) {

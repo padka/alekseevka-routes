@@ -3,7 +3,7 @@
   'use strict';
 
   const routes = window.EXCURSION_ROUTES;
-  const overviewMapId = 'c166b3dd2c1a08f2f1bd5a2cfd1f13b16d2dd6a09dbde858896e0705438fae3e';
+  const overviewMapId = 'c35f059ae87fab7d63cd31432c9af6c31540f76ebe1c5319ef30325ffa55d068';
   let home, detail, selectedRoute = 'all';
 
   function html(value) {
