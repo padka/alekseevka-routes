@@ -182,6 +182,9 @@
       // Focus on the explanation. The next Tab continues past the answered row.
       feedback.classList.remove("hidden");
       feedback.focus({ preventScroll: event.detail !== 0 });
+      if (event.detail !== 0 && window.matchMedia("(max-width: 760px)").matches) {
+        feedback.scrollIntoView({ block: "nearest", behavior: "instant" });
+      }
     });
   }
 

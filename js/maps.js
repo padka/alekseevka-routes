@@ -98,7 +98,10 @@
     const visibleRoutes = selectedRoute === 'all' ? routes : routes.filter(r => r.id === Number(selectedRoute));
     const entries = visibleRoutes.flatMap(r => stopsFor(r, false));
     const route = visibleRoutes[0];
-    document.getElementById('mapSidebarTitle').textContent = selectedRoute === 'all' ? 'Все объекты' : `Маршрут ${route.number}`;
+    const all = selectedRoute === 'all';
+    const sidebar = document.getElementById('mapSidebar');
+    sidebar.classList.toggle('map-show-all', all);
+    document.getElementById('mapSidebarTitle').textContent = all ? 'Все остановки' : `${route.number} · ${route.shortTitle}`;
     document.getElementById('mapSidebarCount').textContent = countLabel(entries.length);
     document.getElementById('mapStopsList').innerHTML = entries.map(({route, point, label, description}) =>
       `<a class="map-stop-item" id="map-stop-${html(point.id)}" data-focus-stop="${html(point.id)}" href="${stopUrl(route,point)}"><span class="map-stop-idx" style="background:${html(route.color)}">${label}</span>
@@ -109,7 +112,6 @@
     footer.innerHTML = selectedRoute === 'all' ? '' : `${route.planningNote ? `<p class="map-planning-note">${html(route.planningNote)}</p>` : ''}
       <a class="btn btn-solid btn-sm" href="#route-${route.id}">Открыть маршрут ${html(route.number)}</a>
       ${walking ? `<a class="map-sidebar-ext" href="${walking}" target="_blank" rel="noopener">Пеший путь в Яндекс Картах</a>` : ''}`;
-    const all = selectedRoute === 'all';
     home.innerHTML = all ? mapPreview(overviewMapId, 'Карта всех маршрутов Алексеевки') :
       mapPreview(route.constructorMapId, 'Карта маршрута ' + route.number);
     const approach = visibleRoutes.flatMap(item => item.stops).find(stop => stop.approachNote);
@@ -120,8 +122,14 @@
     const map = document.getElementById('cityMap');
     if (home || !map) return;
     const toolbar = document.getElementById('mapRouteFilters');
-    toolbar.innerHTML = `<button type="button" class="map-filter-btn active" data-map-route="all" aria-pressed="true">Все маршруты</button>` +
-      routes.map(r => `<button type="button" class="map-filter-btn" data-map-route="${r.id}" aria-pressed="false"><span class="route-dot" style="background:${html(r.color)}"></span>${html(r.number)} · ${html(r.shortTitle)}</button>`).join('');
+    toolbar.innerHTML = `<button type="button" class="map-filter-btn active" data-map-route="all" aria-pressed="true" aria-label="Все маршруты"><span class="map-filter-label">Все маршруты</span><span class="map-filter-short" aria-hidden="true">Все</span></button>` +
+      routes.map(r => `<button type="button" class="map-filter-btn" data-map-route="${r.id}" aria-pressed="false" aria-label="Маршрут ${html(r.number)} · ${html(r.shortTitle)}"><span class="route-dot" aria-hidden="true" style="background:${html(r.color)}"></span><span class="map-filter-label">${html(r.number)} · ${html(r.shortTitle)}</span><span class="map-filter-short" aria-hidden="true">${html(r.number)}</span></button>`).join('');
+    const stopsToggle = document.getElementById('mapStopsToggle');
+    stopsToggle.addEventListener('click', () => {
+      const open = stopsToggle.getAttribute('aria-expanded') === 'true';
+      stopsToggle.setAttribute('aria-expanded', String(!open));
+      stopsToggle.textContent = open ? 'Показать все остановки' : 'Свернуть список';
+    });
     home = map;
     renderHome();
     toolbar.addEventListener('click', e => {
