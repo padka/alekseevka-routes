@@ -489,8 +489,7 @@
         byId('routeDetailView').replaceChildren();
         home.classList.remove('hidden');
         document.title = homeTitle;
-        maps.showHome();
-      }
+        }
       const back = restore && history.state?.homeReturn;
       if (back && back.catalog) {
         Object.assign(catalog, back.catalog);
@@ -526,13 +525,11 @@
   function navigate(hash, origin) {
     if (!hash) return;
     if (location.hash !== hash) {
-      const mapReturn = maps.navigationOrigin(origin);
-      if (mapReturn) origin = mapReturn.element;
       const area = origin?.closest('#catalogStage,#cityMap,#mapStopsList,#mapSidebarFooter');
       if (origin?.closest('#routeMiniMap')) {
-        history.replaceState({routeMapReturn: {href: hash, linkId: origin.id, y: mapReturn?.y ?? window.scrollY}}, '');
+        history.replaceState({routeMapReturn: {href: hash, linkId: origin.id, y: window.scrollY}}, '');
       } else if (area) {
-        const back = { area: area.id, href: hash, linkId: origin.id, y: mapReturn?.y ?? window.scrollY };
+        const back = { area: area.id, href: hash, linkId: origin.id, y: window.scrollY };
         if (area.id === 'catalogStage') {
           back.catalog = { ...catalog };
         } else {
